@@ -10,21 +10,31 @@ RUN apt-get install -y --no-install-recommends \
     libwebp-dev \
     libzip-dev
 
-RUN docker-php-ext-install -j "$(nproc)" \ 
-    pdo \
-    pdo_pgsql \
+# Install Postgre PDO
+RUN apt-get install -y libpq-dev \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pdo pdo_pgsql pgsql
+
+RUN docker-php-ext-install -j "$(nproc)" \
     bcmath \
     exif \
     gd \
     intl \
     zip
 
-RUN docker-php-ext-configure gd \
-    --with-freetype \
-    --with-jpeg \
-    --with-webp
+# php7.4
+# RUN docker-php-ext-configure gd \
+#     --with-freetype \
+#     --with-jpeg \
+#     --with-webp
 
-RUN pecl install xdebug && docker-php-ext-enable xdebug
+# php7.3
+RUN docker-php-ext-configure gd \
+    --with-freetype-dir \
+    --with-jpeg-dir \
+    --with-webp-dir
+
+# RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 RUN pecl install imagick-3.7.0 && docker-php-ext-enable imagick
 
