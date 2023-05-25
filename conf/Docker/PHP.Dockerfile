@@ -1,4 +1,4 @@
-FROM php:fpm
+FROM php:7.3-fpm
 RUN apt-get update
 
 RUN apt-get install -y --no-install-recommends \
@@ -12,7 +12,7 @@ RUN apt-get install -y --no-install-recommends \
 
 RUN docker-php-ext-install -j "$(nproc)" \ 
     pdo \
-    pdo_psql \
+    pdo_pgsql \
     bcmath \
     exif \
     gd \
