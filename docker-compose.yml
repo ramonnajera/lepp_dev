@@ -1,0 +1,36 @@
+services:
+  # nginx
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./conf/nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - ./public:/site1/public
+    depends_on:
+      - php
+    restart: always
+  # php
+  php:
+    build:
+      context: ./conf/Docker
+      dockerfile: PHP.Dockerfile
+    volumes:
+      - ./public:/site1/public
+    depends_on:
+      - postgresql
+    restart: always
+  # postgresql
+  postgresql:
+    image: postgresql:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=dev
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    volumes:
+      -./conf/postgresql/data:/var/lib/postgresql/data
+      -./conf/postgresql/schema.sql:/docker_entrypoint-initdb.d/create_schema.sql
+      -./conf/postgresql/data.sql:/docker_entrypoint-initdb.d/data.sql
+volumes:
