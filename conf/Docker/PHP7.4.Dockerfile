@@ -1,4 +1,4 @@
-FROM php:7.3-fpm
+FROM php:7.4-fpm
 RUN apt-get update
 
 RUN apt-get install -y --no-install-recommends \
@@ -23,16 +23,10 @@ RUN docker-php-ext-install -j "$(nproc)" \
     zip
 
 # php7.4
-# RUN docker-php-ext-configure gd \
-#     --with-freetype \
-#     --with-jpeg \
-#     --with-webp
-
-# php7.3
 RUN docker-php-ext-configure gd \
-    --with-freetype-dir \
-    --with-jpeg-dir \
-    --with-webp-dir
+    --with-freetype \
+    --with-jpeg \
+    --with-webp
 
 # RUN pecl install xdebug && docker-php-ext-enable xdebug
 

@@ -14,7 +14,7 @@ services:
   php:
     build:
       context: ./conf/Docker
-      dockerfile: PHP.Dockerfile
+      dockerfile: PHP7.3OCI.Dockerfile
     volumes:
       - ./public:/site1/public
     depends_on:
