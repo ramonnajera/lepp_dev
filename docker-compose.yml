@@ -3,7 +3,7 @@ services:
   web:
     image: nginx:latest
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - ./conf/nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
       - ./public:/site1/public
@@ -14,7 +14,7 @@ services:
   php:
     build:
       context: ./conf/Docker
-      dockerfile: PHP7.3OCI.Dockerfile
+      dockerfile: PHP7.4.Dockerfile
     volumes:
       - ./public:/site1/public
     depends_on:
